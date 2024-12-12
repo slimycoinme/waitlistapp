@@ -18,21 +18,6 @@ import {
 import { ContentCopy as ContentCopyIcon } from '@mui/icons-material';
 import toast from 'react-hot-toast';
 
-const formatDate = (dateString) => {
-  if (!dateString) return 'Recently';
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  } catch (error) {
-    console.error('Error formatting date:', error);
-    return 'Recently';
-  }
-};
-
 const handleCopyReferralCode = async (referralCode) => {
   try {
     await navigator.clipboard.writeText(referralCode);
@@ -85,7 +70,6 @@ const WaitlistEntries = ({
               <TableCell>Name</TableCell>
               <TableCell>Referrals</TableCell>
               <TableCell>Referral Code</TableCell>
-              <TableCell>Joined</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -108,7 +92,6 @@ const WaitlistEntries = ({
                     </Tooltip>
                   </Box>
                 </TableCell>
-                <TableCell>{formatDate(user.created_at)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

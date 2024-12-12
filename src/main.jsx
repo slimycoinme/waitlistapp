@@ -38,19 +38,14 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-console.log('Firebase config:', {
-  authDomain: firebaseConfig.authDomain,
-  projectId: firebaseConfig.projectId,
-});
-
-// Initialize Firebase
 let app;
+let auth;
+
 try {
   app = initializeApp(firebaseConfig);
-  console.log('Firebase initialized successfully');
+  auth = getAuth(app);
   
   // Set up auth persistence
-  const auth = getAuth(app);
   setPersistence(auth, browserLocalPersistence)
     .then(() => {
       console.log('Auth persistence set to local');
@@ -58,31 +53,26 @@ try {
     .catch((error) => {
       console.error('Error setting auth persistence:', error);
     });
+
+  // Add error handler for auth state changes
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log('User is signed in:', user.email);
+      localStorage.setItem('user', JSON.stringify({
+        email: user.email,
+        displayName: user.displayName,
+        uid: user.uid
+      }));
+    } else {
+      console.log('User is signed out');
+      localStorage.removeItem('user');
+    }
+  }, (error) => {
+    console.error('Auth state change error:', error);
+  });
 } catch (error) {
   console.error('Error initializing Firebase:', error);
-  document.body.innerHTML = `<div style="color: red; padding: 20px;">Error initializing Firebase: ${error.message}</div>`;
-  throw error;
 }
-
-const auth = getAuth(app);
-
-// Add error handler for auth state changes
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    console.log('User is signed in:', user.email);
-    // Store user info in localStorage for persistence
-    localStorage.setItem('user', JSON.stringify({
-      email: user.email,
-      displayName: user.displayName,
-      uid: user.uid
-    }));
-  } else {
-    console.log('User is signed out');
-    localStorage.removeItem('user');
-  }
-}, (error) => {
-  console.error('Auth state change error:', error);
-});
 
 // Check if root element exists
 const rootElement = document.getElementById("root");

@@ -3,9 +3,10 @@ import { Box, Container, Fade, Typography } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { API_URL } from './config/api';
 
 // Configure axios defaults
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = API_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 10000;
 
