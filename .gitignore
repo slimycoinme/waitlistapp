@@ -2,18 +2,20 @@
 /node_modules
 /.pnp
 .pnp.js
+dist/netlify/functions/node_modules/
 
 # testing
 /coverage
 
 # production
 /build
+.cache
 
-# misc
-.DS_Store
-
-# environment files (keep examples in git)
+# environment files
+.env
+.env.local
 .env.*.local
+dist/.env
 **/.env
 **/.env.local
 **/.env.development.local
@@ -45,3 +47,6 @@ lerna-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# misc
+.DS_Store

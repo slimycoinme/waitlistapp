@@ -15,11 +15,11 @@ app.use(cors({
 
 app.use(express.json());
 
-// Routes
-app.use('/.netlify/functions/api/users', userRoutes);
+// Routes - Remove the /.netlify/functions/api prefix as it's handled by Netlify
+app.use('/users', userRoutes);
 
 // Health check endpoint
-app.get('/.netlify/functions/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     environment: process.env.NODE_ENV, 

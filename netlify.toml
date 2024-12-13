@@ -3,10 +3,16 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[dev]
+  port = 9999
+  publish = "dist"
+  functions = "netlify/functions"
+
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/api/:splat"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
